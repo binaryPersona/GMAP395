@@ -12,6 +12,7 @@ public class MouseLook : MonoBehaviour
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+
     }
 
     void LateUpdate()
@@ -22,7 +23,7 @@ public class MouseLook : MonoBehaviour
         currentX = Mathf.SmoothDamp(currentX, xRot, ref xRotationV, lookSmoothDamp);
         currentY = Mathf.SmoothDamp(currentY, yRot, ref yRotationV, lookSmoothDamp);
 
-        // yRot = Mathf.Clamp(yRot, -80, 80);
+        yRot = Mathf.Clamp(yRot, -80, 80);
         xRot = Mathf.Clamp(xRot, -80, 80);
 
         transform.rotation = Quaternion.Euler(-currentX, currentY, 0);

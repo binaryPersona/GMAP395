@@ -15,27 +15,33 @@ public class Target : MonoBehaviour
 
     public int beatsShownInAdvance;
     public float beatOfThisNote;
-    public float songPositionInBeats;
+    // public float songPositionInBeats;
+    public RhythmTracker rhythm;
+
+    private bool hit = false;
 
     void Update()
     {
-        Debug.Log((beatsShownInAdvance - (beatOfThisNote - songPositionInBeats)) / beatsShownInAdvance);
-        transform.position = Vector3.Lerp(spawnPosition.position, despawnPosition.position, (beatsShownInAdvance - (beatOfThisNote - songPositionInBeats)) / beatsShownInAdvance);
+        if (!hit)
+        {
+            transform.position = Vector3.Lerp(spawnPosition.position, despawnPosition.position, (beatsShownInAdvance - (beatOfThisNote - rhythm.songPositionInBeats)) / beatsShownInAdvance);
+            if (transform.position == despawnPosition.position)
+            {
+                Destroy(gameObject);
+            }
+        }
     }
 
     public void Damage(int damageAmount)
     {
         currentHealth -= damageAmount;
+        Debug.Log("Damaged!");
 
         if (currentHealth <= 0)
         {
-            StartCoroutine(Destroy());
+            hit = true;
+            Destroy(gameObject, despawnTime);
+            GetComponent<Rigidbody>().useGravity = true;
         }
-    }
-
-    private IEnumerator Destroy()
-    {
-        yield return despawnTime;
-        gameObject.SetActive(false);
     }
 }

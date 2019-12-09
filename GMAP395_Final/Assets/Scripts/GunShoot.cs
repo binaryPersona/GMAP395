@@ -7,15 +7,16 @@ public class GunShoot : MonoBehaviour
     [SerializeField]
     protected int baseDamage = 1;
     [SerializeField]
-    protected float fireRate = 0.25f;
+    protected float fireRate = 0.2f;
     [SerializeField]
     protected float range = 50f;
     [SerializeField]
     protected float hitForce = 100f;
     [SerializeField]
     protected Transform gunMuzzle;
+    [SerializeField]
+    protected Camera fpsCam;
 
-    private Camera fpsCam;
     private AudioSource gunAudio;
     private LineRenderer laserLine;
     private float nextFire;
@@ -26,8 +27,8 @@ public class GunShoot : MonoBehaviour
     void Start()
     {
         laserLine = GetComponent<LineRenderer>();
+        transform.SetParent(fpsCam.transform);
         // gunAudio = GetComponent<AudioSource> ();
-        fpsCam = GetComponentInParent<Camera>();
     }
 
     // Update is called once per frame
