@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2737288894838830879}
   - component: {fileID: 7582460334450185319}
   m_Layer: 0
-  m_Name: target
+  m_Name: target_green
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -60,7 +60,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 43c20c1e099037647a3ab886f0402f28, type: 2}
+  - {fileID: 2100000, guid: 8b3fbc2d53c9e6446a1ad63daf213380, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -107,12 +107,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 1
-  despawnTime: 1.2
+  despawnTime: 0.8
   spawnPosition: {fileID: 0}
   despawnPosition: {fileID: 0}
   beatsShownInAdvance: 0
   beatOfThisNote: 0
   rhythm: {fileID: 0}
+  poof: {fileID: 5218250195455129960, guid: ae90bf1be02bcae4096333db9ce9d96f, type: 3}
 --- !u!54 &7582460334450185319
 Rigidbody:
   m_ObjectHideFlags: 0

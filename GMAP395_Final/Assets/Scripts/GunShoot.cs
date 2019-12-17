@@ -16,6 +16,12 @@ public class GunShoot : MonoBehaviour
     protected Transform gunMuzzle;
     [SerializeField]
     protected Camera fpsCam;
+    [SerializeField]
+    protected float bulletSpeed;
+    [SerializeField]
+    protected float despawnTime;
+
+    public GameObject bullet;
 
     private AudioSource gunAudio;
     private LineRenderer laserLine;
@@ -37,29 +43,40 @@ public class GunShoot : MonoBehaviour
         if (Input.GetButtonDown("Fire1") && Time.time > nextFire)
         {
             nextFire = Time.time + fireRate;
-            StartCoroutine(ShotEffect());
-            Vector3 rayOrigin = fpsCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.0f));
-            RaycastHit hit;
-            laserLine.SetPosition(0, gunMuzzle.position);
-            if (Physics.Raycast(rayOrigin, fpsCam.transform.forward, out hit, range))
-            {
-                laserLine.SetPosition(1, hit.point);
-                Target health = hit.collider.GetComponent<Target>();
-                //TODO: add varying damage based off of beat
-                if (health != null)
-                {
-                    health.Damage(baseDamage);
-                }
-                if (hit.rigidbody != null)
-                {
-                    hit.rigidbody.AddForce(-hit.normal * hitForce);
-                }
-            }
-            else
-            {
-                laserLine.SetPosition(1, rayOrigin + (fpsCam.transform.forward * range));
-            }
+            Shoot();
+
+
+            // StartCoroutine(ShotEffect());
+            // Vector3 rayOrigin = fpsCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.0f));
+            // RaycastHit hit;
+            // laserLine.SetPosition(0, gunMuzzle.position);
+            // if (Physics.Raycast(rayOrigin, fpsCam.transform.forward, out hit, range))
+            // {
+            //     laserLine.SetPosition(1, hit.point);
+            //     Target health = hit.collider.GetComponent<Target>();
+            //     //TODO: add varying damage based off of beat
+            //     if (health != null)
+            //     {
+            //         health.Damage(baseDamage);
+            //     }
+            //     if (hit.rigidbody != null)
+            //     {
+            //         hit.rigidbody.AddForce(-hit.normal * hitForce);
+            //     }
+            // }
+            // else
+            // {
+            //     laserLine.SetPosition(1, rayOrigin + (fpsCam.transform.forward * range));
+            // }
         }
+    }
+
+    private void Shoot()
+    {
+        GameObject currentProjectile = Instantiate(bullet, gunMuzzle.position, Quaternion.identity) as GameObject;
+        Rigidbody projectileRB = currentProjectile.GetComponent<Rigidbody>();
+        projectileRB.AddForce(gunMuzzle.forward * bulletSpeed);
+        Destroy(currentProjectile, despawnTime);
     }
 
     private IEnumerator ShotEffect()

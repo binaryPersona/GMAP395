@@ -10,11 +10,13 @@ public class RhythmTracker : MonoBehaviour
     [SerializeField]
     protected int beatsShownInAdvance;
     [SerializeField]
-    protected GameObject targetPrefab;
+    protected GameObject[] targetPrefabs;
     [SerializeField]
     protected Transform[] spawnPositions;
     [SerializeField]
     protected Transform[] despawnPositions;
+
+    public Score score;
 
     private float secPerBeat;
     private float songPosition;
@@ -51,7 +53,7 @@ public class RhythmTracker : MonoBehaviour
             if (nextIndex < beats.Length && beats[nextIndex] < songPositionInBeats + beatsShownInAdvance)
             {
                 int spawnLane = spawnLanes[nextIndex];
-                GameObject targetObject = Instantiate(targetPrefab, spawnPositions[spawnLane].position, spawnPositions[spawnLane].rotation);
+                GameObject targetObject = Instantiate(targetPrefabs[spawnLane], spawnPositions[spawnLane].position, spawnPositions[spawnLane].rotation);
                 Target target = targetObject.GetComponent<Target>();
 
                 target.beatsShownInAdvance = beatsShownInAdvance;
@@ -59,6 +61,7 @@ public class RhythmTracker : MonoBehaviour
                 target.beatOfThisNote = beats[nextIndex];
                 target.spawnPosition = spawnPositions[spawnLane];
                 target.despawnPosition = despawnPositions[spawnLane];
+                target.score = score;
                 nextIndex++;
             }
         }

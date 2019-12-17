@@ -107,12 +107,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 1
-  despawnTime: 1.2
+  despawnTime: 0.8
   spawnPosition: {fileID: 0}
   despawnPosition: {fileID: 0}
   beatsShownInAdvance: 0
   beatOfThisNote: 0
   rhythm: {fileID: 0}
+  poof: {fileID: 5218250195455129960, guid: ae90bf1be02bcae4096333db9ce9d96f, type: 3}
 --- !u!54 &7582460334450185319
 Rigidbody:
   m_ObjectHideFlags: 0

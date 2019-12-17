@@ -17,6 +17,8 @@ public class Target : MonoBehaviour
     public float beatOfThisNote;
     // public float songPositionInBeats;
     public RhythmTracker rhythm;
+    public ParticleSystem poof;
+    public Score score;
 
     private bool hit = false;
 
@@ -37,11 +39,20 @@ public class Target : MonoBehaviour
         currentHealth -= damageAmount;
         Debug.Log("Damaged!");
 
-        if (currentHealth <= 0)
+        if (currentHealth <= 0 && hit == false)
         {
             hit = true;
-            Destroy(gameObject, despawnTime);
-            GetComponent<Rigidbody>().useGravity = true;
+            StartCoroutine(DestroyWithPoof());
+            int points = (int)(beatsShownInAdvance - (beatOfThisNote - rhythm.songPositionInBeats));
+            score.AddScore(points);
         }
+    }
+
+    private IEnumerator DestroyWithPoof()
+    {
+        Destroy(gameObject, despawnTime);
+        GetComponent<Rigidbody>().useGravity = true;
+        yield return new WaitForSeconds(despawnTime - 0.05f);
+        Instantiate(poof, transform.position, transform.rotation);
     }
 }
